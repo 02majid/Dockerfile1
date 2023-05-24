@@ -1,10 +1,13 @@
-FROM python:3.8-slim-buster 
+# Use the official Nginx base image
+FROM nginx:latest
 
-WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+# Copy custom HTML file with custom message
+COPY custom_message.html /var/www/html/
 
-COPY . .
+# Expose port 80 for HTTP traffic
+EXPOSE 80
 
-CMD ["python3", "-m", "flash", "run", "--host=0.0.0.0" ]
+# Start Nginx when the container starts
+CMD ["nginx", "-g", "daemon off;"]
+
